@@ -27,11 +27,15 @@ const App = () => {
 
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(ary)
+  const [mostVotes, setMostVotes] = useState(0)
 
   const handleVoteClick = () => {
     const newVotes = [...votes]
     newVotes[selected] += 1
     setVotes(newVotes)
+    if (newVotes[selected] > votes[mostVotes]) {
+      setMostVotes(selected)
+    }
   }
 
   const handleNextClick = () => {
@@ -40,12 +44,16 @@ const App = () => {
 
   return (
     <div>
+      <h2>Random anecdote:</h2>
       {anecdotes[selected]}
       <p>has {votes[selected]} votes</p>
       <p>
         <Button handleClick={handleVoteClick} text='Vote' />
         <Button handleClick={handleNextClick} text='next anecdote' />
       </p>
+      <h2>Most voted anecdote:</h2>
+      {anecdotes[mostVotes]}
+      <p>has {votes[mostVotes]} votes</p>
     </div>
   )
 }
